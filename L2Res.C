@@ -21,7 +21,7 @@ bool fitD = true; // Dijet (pT,ave)
 bool fitP = true; // Dijet (pT,probe)
 bool fitJ = true; // Dijet (pT,tag)
 
-string version_string = "rescaleMass_removeCorrectEvents_removeNAN_StandardPt_mctruth15_NewRunCrabSkim";
+string version_string = "rescaleMass_removeCorrectEvents_removeNAN_pnetreg_mctruth15_NewRunCrabSkim_closure";
 const char * version = version_string.c_str();
 
 string YEAR = "2022";

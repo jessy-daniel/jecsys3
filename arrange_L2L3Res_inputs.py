@@ -1,53 +1,59 @@
 import os
 import argparse
+import subprocess
 
 DIJET=False
 GAMJET=False
 ZJET=True
 
+L2L3RES_DIR="L2L3Res_inputs"
+HOME_DIR = os.environ.get("HOME", ".")
 
 parser = argparse.ArgumentParser(description="Copy files to a common directory")
 parser.add_argument("-v", "--version", required=True)
-parser.add_argument("-d", "--directory", default="/work/mmalucch/L2L3Res_inputs")
-parser.add_argument("-o", "--option", default="work", help="What to do with the files (work, storage, rm)")
+parser.add_argument("-o", "--option", default="copy", help="What to do with the files (copy, backup, rm)")
 
 args = parser.parse_args()
 
-if args.option == "work":
-    work_dir=f"{args.directory}/{args.version}"
+if args.option == "copy":
+    # get workdir
+    copy_dir= os.environ.get("copy_dir", ".")
+    main_dir=f"{copy_dir}/{L2L3RES_DIR}/{args.version}"
     #mkdir
-    os.system(f"mkdir {work_dir}")
-    
+    subprocess.run(f"mkdir {main_dir}", shell=True)
+    breakpoint()
     if DIJET:
         print("Copying dijet")
-        os.system(f"mkdir {work_dir}/dijet")
-        os.system(f"cp ~/dijet/rootfiles/{args.version}/*root {work_dir}/dijet/")
+        subprocess.run(f"mkdir {main_dir}/dijet", shell=True)
+        subprocess.run(f"cp {HOME_DIR}/dijet/rootfiles/{args.version}/*root {main_dir}/dijet/", shell=True)
         
     if GAMJET:
         print("Copying gamjet-analysis")
-        os.system(f"mkdir {work_dir}/gam")
-        os.system(f"cp ~/gamjet-analysis/rootfiles/{args.version}/*root {work_dir}/gam/")
+        subprocess.run(f"mkdir {main_dir}/gam", shell=True)
+        subprocess.run(f"cp {HOME_DIR}/gamjet-analysis/rootfiles/{args.version}/*root {main_dir}/gam/", shell=True)
         
     if ZJET:
         print("Copying ZbAnalysis")
-        os.system(f"mkdir {work_dir}/zb")
-        os.system(f"cp ~/ZbAnalysis/figures/{args.version}_*/jme_bplusZ_merged*.root {work_dir}/zb/")
+        subprocess.run(f"mkdir {main_dir}/zb", shell=True)
+        subprocess.run(f"cp {HOME_DIR}/ZbAnalysis/figures/{args.version}_*/jme_bplusZ_merged*.root {main_dir}/zb/", shell=True)
 
-    print(f"Copied output in {work_dir}")
+    print(f"Copied output in {main_dir}")
 
-elif  args.option == "storage":
-    storage_dir="/pnfs/psi.ch/cms/trivcat/store/user/mmalucch/L2L3_all_inputs/"
+elif  args.option == "backup":
+    backup_dir=os.environ.get("backup_dir", ".")
+    main_dir=f"{backup_dir}/{L2L3RES_DIR}"
+    breakpoint()
 
     if DIJET:
         print("Copying dijet")
-        os.system(f"rsync -ravzP --ignore-existing ~/dijet/rootfiles/{args.version} {storage_dir}/dijet_rootfiles/")
+        subprocess.run(f"rsync -ravzP --ignore-existing {HOME_DIR}/dijet/rootfiles/{args.version} {main_dir}/dijet_rootfiles/", shell=True)
     if GAMJET:
         print("Copying gamjet-analysis")
-        os.system(f"rsync -ravzP --ignore-existing ~/gamjet-analysis/rootfiles/{args.version} {storage_dir}/gam_jet_rootfiles/")
+        subprocess.run(f"rsync -ravzP --ignore-existing {HOME_DIR}/gamjet-analysis/rootfiles/{args.version} {main_dir}/gam_jet_rootfiles/", shell=True)
     if ZJET:
         print("Copying ZbAnalysis")
-        os.system(f"rsync -ravzP --ignore-existing ~/ZbAnalysis/rootfiles/{args.version}_* {storage_dir}/zb_rootfiles/")
-        os.system(f"rsync -ravzP --ignore-existing ~/ZbAnalysis/figures/{args.version}_* {storage_dir}/zb_rootfiles/figures/")
+        subprocess.run(f"rsync -ravzP --ignore-existing {HOME_DIR}/ZbAnalysis/rootfiles/{args.version}* {main_dir}/zb_rootfiles/", shell=True)
+        subprocess.run(f"rsync -ravzP --ignore-existing {HOME_DIR}/ZbAnalysis/figures/{args.version}* {main_dir}/zb_rootfiles/figures/", shell=True)
 
 elif args.option == "rm":
     print("Are you sure you want to remove the files? [y/n]")
@@ -55,14 +61,17 @@ elif args.option == "rm":
     if answer == "y":
         if DIJET: 
             print("Removing dijet")
-            os.system(f"rm -r ~/dijet/rootfiles/{args.version}")
+            subprocess.run(f"rm -r {HOME_DIR}/dijet/rootfiles/{args.version}", shell=True)
         if GAMJET:
             print("Removing gamjet-analysis")
-            os.system(f"rm -r ~/gamjet-analysis/rootfiles/{args.version}")
+            subprocess.run(f"rm -r {HOME_DIR}/gamjet-analysis/rootfiles/{args.version}", shell=True)
         if ZJET:
             print("Removing ZbAnalysis")
-            os.system(f"rm -r ~/ZbAnalysis/rootfiles/{args.version}_*")
-            os.system(f"rm -r ~/ZbAnalysis/figures/{args.version}_*")
+            subprocess.run(f"rm -r {HOME_DIR}/ZbAnalysis/rootfiles/{args.version}_*", shell=True)
+            subprocess.run(f"rm -r {HOME_DIR}/ZbAnalysis/figures/{args.version}_*", shell=True)
         print("Files removed")
     else:
         print("Nothing removed")
+else:
+    print("Unknown option. Please use 'copy', 'backup' or 'rm'.")
+    exit(1)
