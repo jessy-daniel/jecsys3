@@ -14,7 +14,7 @@ Copy the outputs of the different analyses to a common directory with
 python arrange_L2L3Res_inputs.py -v version -o work
 ```
 
-Run for 2022+2023 recompiling the libraries
+Run the L2L3Residuals, recompiling the libraries, with
 
 ```bash
 python L2L3Res.py -y all -v version
@@ -27,3 +27,10 @@ This script executes the following actions:
 - Compute the L3Res doing a global fit and show the different contributions running `python minitools/runAllIOVs.py -v version`
 - change version and year in `L2Res.C` and run  `root -l -b L2Res.C+g` to compute the L2Res
 - change version and year in `createL2L3ResTextFile.C` and run  `root -l -b createL2L3ResTextFile.C+g` to create the text file containing the L2L3Residuals
+
+
+To run the JERSF calculation, use
+
+```bash
+root -l -b -q JERSF.C+g
+```
