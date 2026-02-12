@@ -685,7 +685,7 @@ void globalFitDraw(string run, string version) {
     //leg2->AddEntry(l,"Run 3 avg.","L");
     //leg2->AddEntry(herr,"Total unc.","F");
     //leg2->AddEntry(herr,"Run2 total unc.","F");
-    leg2->AddEntry(herr, TString(crun).Contains("23") ? "Summer23" : "Summer22", "F");
+    leg2->AddEntry(herr, TString(crun).Contains("24") ? "Summer24" : (TString(crun).Contains("23") ? "Summer23" : "Summer22"), "F");
     leg2->AddEntry(gre,"Fit unc.","FL");
 
     // Separate canvas for CHF, NHF, NEF

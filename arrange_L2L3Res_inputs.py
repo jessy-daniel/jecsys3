@@ -7,7 +7,8 @@ GAMJET=False
 ZJET=True
 
 L2L3RES_DIR="L2L3Res_inputs"
-HOME_DIR = os.environ.get("HOME", ".")
+HOME_DIR = "/afs/cern.ch/user/j/jessy/workspace/private/CMS/PNET_Regression/Residuals/"
+#HOME_DIR = os.environ.get("HOME", ".")
 
 parser = argparse.ArgumentParser(description="Copy files to a common directory")
 parser.add_argument("-v", "--version", required=True)
@@ -21,7 +22,7 @@ if args.option == "copy":
     main_dir=f"{copy_dir}/{L2L3RES_DIR}/{args.version}"
     #mkdir
     subprocess.run(f"mkdir {main_dir}", shell=True)
-    breakpoint()
+    #breakpoint()
     if DIJET:
         print("Copying dijet")
         subprocess.run(f"mkdir {main_dir}/dijet", shell=True)

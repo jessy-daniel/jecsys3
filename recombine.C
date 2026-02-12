@@ -73,6 +73,13 @@ void recombine(string type="Run2") {
   finns.push_back(make_pair<double,string>(9.847,"Run23C4"));
   finns.push_back(make_pair<double,string>(9.525,"Run23D"));
   // total 92.46 if 2023 double, if no 2023 double 63.77
+  finns.push_back(make_pair<double,string>(7.25,"Run24C"));
+  finns.push_back(make_pair<double,string>(7.94,"Run24D"));
+  finns.push_back(make_pair<double,string>(11.30,"Run24E"));
+  finns.push_back(make_pair<double,string>(27.75,"Run24F"));
+  finns.push_back(make_pair<double,string>(37.73,"Run24G"));
+  finns.push_back(make_pair<double,string>(5.44,"Run24H"));
+  finns.push_back(make_pair<double,string>(11.42,"Run24I"));
 
   vector<pair<double,TDirectory*> > fins(finns.size());
   for (unsigned int i = 0; i != finns.size(); ++i) {
