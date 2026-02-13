@@ -940,6 +940,10 @@ void globalFitDraw(string run, string version) {
     if (run=="Run23C123")  nhf_off = -1.5;//1.0;//-1.0;//1.0;
     if (run=="Run23C4")  nhf_off = 2.0;//2.0;//7.0;//4.0;
     if (run=="Run23D")  nhf_off = 3.5;//2.0;//9.0;//4.5;
+    if (run=="Run24B" || run=="Run24C" || run=="Run24D" || run=="Run24E" ||
+	  run=="Run24F" || run=="Run24G" || run=="Run24H" || run=="Run24I" || 
+	  run=="Run24BC" || run=="Run24BCD" || run=="Run24BCDE" ||
+	  run=="Run24CP" || run=="Run24CR" || run=="Run24CS")  nhf_off = 0.0;
     if (run=="Run3")  {
       nhf_off = ((5.1+3.0)*2.0 + 5.9*3.0 + (18.0+3.1)*3.0 +
 		 //8.7*1.0 + 9.8*4.0 + 9.5*4.5) / //Summer22
